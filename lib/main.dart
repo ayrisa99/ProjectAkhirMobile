@@ -1,8 +1,10 @@
+import 'package:finalproject/cubit/app_state_cubit.dart';
 import 'package:finalproject/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(BlocProvider(create: (_) => AppStateCubit(), child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -15,7 +17,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(0, 49, 10, 10)),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color.fromARGB(0, 49, 10, 10),
+        ),
       ),
       home: const WelcomeScreen(),
     );

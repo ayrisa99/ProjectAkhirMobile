@@ -1,4 +1,4 @@
-import 'package:finalproject/widgets/custom_scaffold2.dart';
+import 'package:finalproject/widgets/scaffold/custom_scaffold2.dart';
 import 'package:finalproject/widgets/health_articel.dart';
 import 'package:finalproject/widgets/health_needs.dart';
 import 'package:finalproject/widgets/top_doctor.dart';

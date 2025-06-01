@@ -1,7 +1,7 @@
 import 'package:finalproject/screens/sigin_screen.dart';
 import 'package:finalproject/screens/signup_screen.dart';
 import 'package:finalproject/theme/theme.dart';
-import 'package:finalproject/widgets/custom_scaffold.dart';
+import 'package:finalproject/widgets/scaffold/custom_scaffold.dart';
 import 'package:finalproject/widgets/welcome_button.dart';
 import 'package:flutter/material.dart';
 

@@ -1,8 +1,8 @@
 import 'package:finalproject/theme/theme.dart';
-import 'package:finalproject/widgets/canceled_schedule.dart';
-import 'package:finalproject/widgets/completed_scahdule.dart';
-import 'package:finalproject/widgets/custom_scaffold2.dart';
-import 'package:finalproject/widgets/upcoming_schedule.dart';
+import 'package:finalproject/widgets/schadule/canceled_schedule.dart';
+import 'package:finalproject/widgets/schadule/completed_scahdule.dart';
+import 'package:finalproject/widgets/scaffold/custom_scaffold2.dart';
+import 'package:finalproject/widgets/schadule/upcoming_schedule.dart';
 import 'package:flutter/material.dart';
 
 class ScheduleScreen extends StatefulWidget {
