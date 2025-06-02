@@ -1,3 +1,6 @@
+import 'package:finalproject/models/doctor_models.dart';
+import 'package:finalproject/models/rumah_sakit_models.dart';
+import 'package:finalproject/screens/dokter_sekitarmu_screen.dart';
 import 'package:finalproject/widgets/scaffold/custom_scaffold2.dart';
 import 'package:finalproject/widgets/health_articel.dart';
 import 'package:finalproject/widgets/health_needs.dart';
@@ -15,6 +18,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool _isSearching = false;
+  final DoctorModel exampleDoctor = nearbyDoctors[0];
   final TextEditingController _searchController = TextEditingController();
 
   void _startSearch() {
@@ -44,12 +48,8 @@ class _HomePageState extends State<HomePage> {
                 ? Container(
                   height: 50,
                   decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(
-                      0.05,
-                    ), // background transparan abu-abu muda
-                    borderRadius: BorderRadius.circular(
-                      20,
-                    ), // border radius bulat
+                    color: Colors.black.withOpacity(0.05),
+                    borderRadius: BorderRadius.circular(20),
                   ),
                   child: TextField(
                     controller: _searchController,
@@ -115,31 +115,64 @@ class _HomePageState extends State<HomePage> {
       child: ListView(
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.symmetric(horizontal: 14),
-        children: const [
-          SizedBox(height: 20),
-          UpcomingCard(),
-          SizedBox(height: 20),
-          Text(
+        children: [
+          const SizedBox(height: 20),
+          const UpcomingCard(),
+          const SizedBox(height: 20),
+          const Text(
             "Kebutuhan Kesehatan",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 15),
-          HealthNeeds(),
-          SizedBox(height: 25),
-          Text(
-            "Dokter Terbaik",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          const SizedBox(height: 15),
+          const HealthNeeds(),
+          const SizedBox(height: 25),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                "Dokter Sekitarmu",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) =>
+                              DokterSekitarmuScreen(doctor: exampleDoctor),
+                    ),
+                  );
+                },
+                child: const Text(
+                  "Lihat Semua",
+                  style: TextStyle(color: Colors.black38),
+                ),
+              ),
+            ],
           ),
-          SizedBox(height: 15),
-          NearbyDoctors(),
-          SizedBox(height: 15),
-          Text(
-            "Artikel Kesehatan",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          const SizedBox(height: 15),
+          NearbyDoctors(hospitals: rumahSakitList),
+          const SizedBox(height: 15),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                "Artikel Kesehatan",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              TextButton(
+                onPressed: () {},
+                child: const Text(
+                  "Lihat Semua",
+                  style: TextStyle(color: Colors.black38),
+                ),
+              ),
+            ],
           ),
-          SizedBox(height: 15),
-          HealthArticel(),
-          SizedBox(height: 20),
+          const SizedBox(height: 15),
+          const HealthArticel(),
+          const SizedBox(height: 20),
         ],
       ),
     );

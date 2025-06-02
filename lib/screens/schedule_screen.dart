@@ -129,9 +129,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                           fontSize: 15,
                           fontWeight: FontWeight.w500,
                           color:
-                              _buttonIndex == 2
-                                  ? const Color.fromARGB(255, 49, 45, 45)
-                                  : Colors.black,
+                              _buttonIndex == 2 ? Colors.white : Colors.black,
                         ),
                       ),
                     ),

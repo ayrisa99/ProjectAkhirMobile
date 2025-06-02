@@ -59,7 +59,7 @@ class _MedicineDetailBodyState extends State<MedicineDetailBody> {
           ),
     );
 
-    overlay?.insert(overlayEntry);
+    overlay.insert(overlayEntry);
 
     Future.delayed(const Duration(seconds: 2), () {
       overlayEntry.remove();

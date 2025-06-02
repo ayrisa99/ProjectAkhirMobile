@@ -263,7 +263,6 @@ class _CheckoutBodyState extends State<CheckoutBody> {
             ),
           ),
 
-          // Card Produk per toko (ditampilkan terakhir)
           ...groupedByStore.entries.map((entry) {
             final storeAddress = entry.key;
             final medicines = entry.value;
@@ -393,12 +392,12 @@ class _CheckoutBodyState extends State<CheckoutBody> {
                           ],
                         ),
                       );
-                    }).toList(),
+                    }),
                   ],
                 ),
               ),
             );
-          }).toList(),
+          }),
 
           const SizedBox(height: 80), // space untuk navbar bawah
         ],

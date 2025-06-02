@@ -36,8 +36,8 @@ class CheckoutScreen extends StatelessWidget {
           ),
         ),
       ),
-      child: const CheckoutBody(),
       bottomNavigationBar: CheckoutNavBar(onCheckout: onCheckoutPressed),
+      child: const CheckoutBody(),
     );
   }
 }

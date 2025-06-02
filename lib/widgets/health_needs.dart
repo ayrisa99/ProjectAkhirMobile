@@ -1,3 +1,5 @@
+import 'package:finalproject/screens/pendaftaran_screen.dart';
+import 'package:finalproject/screens/rumah_sakit_screen.dart';
 import 'package:flutter/material.dart';
 
 class HealthNeeds extends StatelessWidget {
@@ -49,7 +51,23 @@ class HealthNeeds extends StatelessWidget {
             children: [
               InkWell(
                 onTap: () {
-                  if (index == customIcons.length - 1) {
+                  if (index == 0) {
+                    // Navigasi ke halaman RumahSakitScreen
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const PendaftaranScreen(),
+                      ),
+                    );
+                  } else if (index == 1) {
+                    // Navigasi ke halaman RumahSakitScreen
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const RumahSakitScreen(),
+                      ),
+                    );
+                  } else if (index == customIcons.length - 1) {
                     showModalBottomSheet(
                       context: context,
                       isScrollControlled: true,
@@ -76,7 +94,7 @@ class HealthNeeds extends StatelessWidget {
                                   const Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      "Health Needs",
+                                      "Kebutuhan Kesehatan",
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
@@ -223,9 +241,7 @@ class HealthNeeds extends StatelessWidget {
               Text(
                 customIcons[index].name,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 12, 
-                ),
+                style: const TextStyle(fontSize: 12),
               ),
             ],
           ),

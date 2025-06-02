@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:finalproject/cubit/app_state_cubit.dart';
-import 'package:finalproject/models/medicine_model.dart';
 import 'package:finalproject/theme/theme.dart';
 
 class CheckoutNavBar extends StatelessWidget {
