@@ -1,5 +1,6 @@
 import 'package:finalproject/screens/home_screen.dart';
 import 'package:finalproject/screens/medicine_store_screen.dart';
+import 'package:finalproject/screens/profile_screen.dart';
 import 'package:finalproject/screens/schedule_screen.dart';
 import 'package:finalproject/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +19,8 @@ class _NavbarRootsState extends State<NavbarRoots> {
   final List<Widget> _screens = [
     const HomePage(),
     const ScheduleScreen(),
-    const MedicineStoreScreen(), // ObatScreen placeholder
-    Container(), // ProfileScreen placeholder
+    const MedicineStoreScreen(), 
+    const ProfileScreen(),
   ];
 
   void _onItemTapped(int index) {

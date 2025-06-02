@@ -1,3 +1,4 @@
+import 'package:finalproject/screens/review_screen.dart';
 import 'package:finalproject/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
@@ -104,7 +105,14 @@ class CompletedScahdule extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ReviewScreen(),
+                              ),
+                            );
+                          },
                           child: Container(
                             width: 120,
                             padding: const EdgeInsets.symmetric(vertical: 8),

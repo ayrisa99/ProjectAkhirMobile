@@ -46,13 +46,16 @@ class _CheckoutBodyState extends State<CheckoutBody> {
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         margin: const EdgeInsets.only(right: 8),
         decoration: BoxDecoration(
-          color: isSelected ? lightColorScheme.primary : Colors.grey.shade300,
+          color:
+              isSelected
+                  ? lightColorScheme.primary
+                  : lightColorScheme.primary.withOpacity(0.15),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Text(
           label,
           style: TextStyle(
-            color: isSelected ? Colors.white : Colors.black87,
+            color: isSelected ? Colors.white : lightColorScheme.primary,
             fontWeight: FontWeight.w600,
           ),
         ),

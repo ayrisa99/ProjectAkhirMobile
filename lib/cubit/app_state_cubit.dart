@@ -1,22 +1,32 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:finalproject/models/medicine_model.dart';
 
-// State class, simpan list item di keranjang + list item yang dipilih
 class AppState {
   final List<Medicine> shopItems;
   final List<Medicine> selectedItems;
+  final Map<String, DateTime> pickUpTimes;
+  final Map<String, double> totalPrices;
 
-  AppState({required this.shopItems, required this.selectedItems});
+  AppState({
+    required this.shopItems,
+    required this.selectedItems,
+    this.pickUpTimes = const {},
+    this.totalPrices = const {},
+  });
 
   factory AppState.initial() => AppState(shopItems: [], selectedItems: []);
 
   AppState copyWith({
     List<Medicine>? shopItems,
     List<Medicine>? selectedItems,
+    Map<String, DateTime>? pickUpTimes,
+    Map<String, double>? totalPrices,
   }) {
     return AppState(
       shopItems: shopItems ?? this.shopItems,
       selectedItems: selectedItems ?? this.selectedItems,
+      pickUpTimes: pickUpTimes ?? this.pickUpTimes,
+      totalPrices: totalPrices ?? this.totalPrices,
     );
   }
 }
@@ -26,8 +36,24 @@ class AppStateCubit extends Cubit<AppState> {
   Map<String, int> quantities = {};
   List<Medicine> shopItems = [];
   List<Medicine> selectedItems = [];
+  Map<String, DateTime> get pickUpTimes => state.pickUpTimes;
+  Map<String, double> get totalPrices => state.totalPrices;
 
   AppStateCubit() : super(AppState(shopItems: [], selectedItems: []));
+
+  void setOrderData(
+    List<Medicine> items,
+    Map<String, DateTime> times,
+    Map<String, double> totals,
+  ) {
+    emit(
+      state.copyWith(
+        selectedItems: items,
+        pickUpTimes: times,
+        totalPrices: totals,
+      ),
+    );
+  }
 
   void addItemToCart(Medicine item) {
     final id = item.name;

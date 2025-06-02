@@ -1,5 +1,4 @@
 import 'package:finalproject/cubit/app_state_cubit.dart';
-import 'package:finalproject/screens/shopping_keranjang.dart';
 import 'package:flutter/material.dart';
 import 'package:finalproject/models/medicine_model.dart';
 import 'package:finalproject/theme/theme.dart';

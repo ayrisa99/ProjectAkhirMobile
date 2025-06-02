@@ -1,6 +1,8 @@
 import 'package:finalproject/models/doctor_models.dart';
 import 'package:finalproject/models/rumah_sakit_models.dart';
+import 'package:finalproject/screens/artikel_screen.dart';
 import 'package:finalproject/screens/dokter_sekitarmu_screen.dart';
+import 'package:finalproject/theme/theme.dart';
 import 'package:finalproject/widgets/scaffold/custom_scaffold2.dart';
 import 'package:finalproject/widgets/health_articel.dart';
 import 'package:finalproject/widgets/health_needs.dart';
@@ -8,6 +10,9 @@ import 'package:finalproject/widgets/top_doctor.dart';
 import 'package:finalproject/widgets/upcoming_card.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart'; // <-- import ini
+import 'package:google_maps_flutter/google_maps_flutter.dart'; // tidak perlu kalau hanya alamat
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,9 +22,89 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String? _currentAddress; // <-- alamat lokasi
+  LatLng? _currentPosition;
   bool _isSearching = false;
   final DoctorModel exampleDoctor = nearbyDoctors[0];
   final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _determinePosition();
+  }
+
+  Future<void> _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please enable location services')),
+        );
+      }
+      return;
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Location permission denied')),
+          );
+        }
+        return;
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Location permissions are permanently denied, please enable it from settings',
+            ),
+          ),
+        );
+      }
+      return;
+    }
+
+    Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+
+    if (mounted) {
+      setState(() {
+        _currentPosition = LatLng(position.latitude, position.longitude);
+      });
+      await _getAddressFromLatLng(position);
+    }
+  }
+
+  Future<void> _getAddressFromLatLng(Position position) async {
+    try {
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+        position.latitude,
+        position.longitude,
+      );
+
+      if (placemarks.isNotEmpty) {
+        final place = placemarks.first;
+
+        setState(() {
+          _currentAddress =
+              "${place.street}, ${place.subLocality}, ${place.locality}, ${place.administrativeArea}, ${place.country}";
+        });
+      }
+    } catch (e) {
+      print("Error reverse geocoding: $e");
+    }
+  }
 
   void _startSearch() {
     setState(() {
@@ -79,6 +164,7 @@ class _HomePageState extends State<HomePage> {
                 )
                 : Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     const Text(
                       "Hi, Ayrisa",
@@ -88,12 +174,30 @@ class _HomePageState extends State<HomePage> {
                         color: Colors.black,
                       ),
                     ),
-                    const SizedBox(height: 3),
-                    Text(
-                      "Bagaimana perasaanmu hari ini?",
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodySmall?.copyWith(fontSize: 15),
+                    const SizedBox(height: 7),
+                    GestureDetector(
+                      onTap: () async {
+                        await _determinePosition();
+                      },
+                      child: Row(
+                        children: [
+                          Icon(
+                            Ionicons.location,
+                            size: 20,
+                            color: lightColorScheme.primary,
+                          ),
+                          const SizedBox(width: 6),
+                          Expanded(
+                            child: Text(
+                              _currentAddress ?? "Mencari lokasi kamu...",
+                              style: Theme.of(
+                                context,
+                              ).textTheme.bodySmall?.copyWith(fontSize: 16),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -162,7 +266,12 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ArtikelScreen()),
+                  );
+                },
                 child: const Text(
                   "Lihat Semua",
                   style: TextStyle(color: Colors.black38),

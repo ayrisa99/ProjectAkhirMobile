@@ -44,9 +44,8 @@ class _PendaftaranBodyState extends State<PendaftaranBody> {
               primary: lightColorScheme.primary,
               onPrimary: Colors.white,
               onSurface: Colors.black,
-              background: Colors.white,
-            ),
-            dialogBackgroundColor: Colors.white,
+              surface: Colors.white,
+            ), dialogTheme: DialogThemeData(backgroundColor: Colors.white),
           ),
           child: child!,
         );
