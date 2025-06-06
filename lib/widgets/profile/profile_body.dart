@@ -1,11 +1,9 @@
-import 'package:finalproject/screens/welcome_screen.dart';
+import 'package:finalproject/screens/diskon_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:finalproject/screens/welcome_screen.dart';
 import 'package:finalproject/screens/orderanku_screen.dart';
 import 'package:finalproject/widgets/profile/edit_profile.dart';
 import 'package:finalproject/theme/theme.dart';
-import 'package:provider/provider.dart';
-import 'package:finalproject/currency.dart'; // path sesuai
-
 
 class ProfileBody extends StatelessWidget {
   final String userName;
@@ -18,197 +16,6 @@ class ProfileBody extends StatelessWidget {
     required this.userEmail,
     required this.profileImageUrl,
   });
-
-  void _showCurrencyConversionDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        String? selectedCurrency;
-
-        Widget buildCurrencyButton(String label) {
-          final bool isSelected = selectedCurrency == label;
-          return GestureDetector(
-            onTap: () {
-              selectedCurrency = label;
-              // Update UI agar tombol bisa berubah warna
-              (context as Element).markNeedsBuild();
-            },
-            child: Container(
-              margin: const EdgeInsets.symmetric(vertical: 6),
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              decoration: BoxDecoration(
-                color:
-                    isSelected
-                        ? lightColorScheme.primary
-                        : lightColorScheme.primary.withOpacity(0.15),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                label,
-                style: TextStyle(
-                  color: isSelected ? Colors.white : lightColorScheme.primary,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                ),
-              ),
-            ),
-          );
-        }
-
-        return AlertDialog(
-          backgroundColor: Colors.white,
-          title: Text(
-            'Pilih Mata Uang Konversi',
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-          ),
-          content: StatefulBuilder(
-            builder: (context, setState) {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedCurrency = 'Won (KRW)';
-                      });
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(vertical: 6),
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      decoration: BoxDecoration(
-                        color:
-                            selectedCurrency == 'Won (KRW)'
-                                ? lightColorScheme.primary
-                                : lightColorScheme.primary.withOpacity(0.15),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Won (KRW)',
-                        style: TextStyle(
-                          color:
-                              selectedCurrency == 'Won (KRW)'
-                                  ? Colors.white
-                                  : lightColorScheme.primary,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedCurrency = 'Dollar (USD)';
-                      });
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(vertical: 6),
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      decoration: BoxDecoration(
-                        color:
-                            selectedCurrency == 'Dollar (USD)'
-                                ? lightColorScheme.primary
-                                : lightColorScheme.primary.withOpacity(0.15),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Dollar (USD)',
-                        style: TextStyle(
-                          color:
-                              selectedCurrency == 'Dollar (USD)'
-                                  ? Colors.white
-                                  : lightColorScheme.primary,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedCurrency = 'Yen (JPY)';
-                      });
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(vertical: 6),
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      decoration: BoxDecoration(
-                        color:
-                            selectedCurrency == 'Yen (JPY)'
-                                ? lightColorScheme.primary
-                                : lightColorScheme.primary.withOpacity(0.15),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Yen (JPY)',
-                        style: TextStyle(
-                          color:
-                              selectedCurrency == 'Yen (JPY)'
-                                  ? Colors.white
-                                  : lightColorScheme.primary,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              );
-            },
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text(
-                'Batal',
-                style: TextStyle(color: Colors.black45),
-              ),
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: lightColorScheme.primary, // warna hijau
-              ),
-              onPressed: () {
-                if (selectedCurrency != null) {
-                  double conversionRate = 1.0;
-
-                  switch (selectedCurrency) {
-                    case 'Won (KRW)':
-                      conversionRate = 13.0; // contoh: 1 IDR = 13 KRW
-                      break;
-                    case 'Dollar (USD)':
-                      conversionRate = 0.000065; // contoh: 1 IDR = 0.000065 USD
-                      break;
-                    case 'Yen (JPY)':
-                      conversionRate = 0.0093; // contoh: 1 IDR = 0.0093 JPY
-                      break;
-                  }
-
-                  // Provider.of<CurrencyProvider>(context, listen: false)
-                  //     .updateCurrency(selectedCurrency!, conversionRate);
-
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Konversi ke $selectedCurrency dipilih')),
-                  );
-                }
-              },
-
-              child: const Text(
-                'Konfirmasi',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -299,30 +106,28 @@ class ProfileBody extends StatelessWidget {
 
           const SizedBox(height: 16),
 
+          // Menu Dapatkan Diskon
           _buildMenuItem(
             context,
-            imageAssetPath: 'assets/logo/waktu.png',
-            label: 'Zona Waktu',
-            subLabel: 'WIB (Waktu Indonesia Barat)',
+            imageAssetPath:
+                'assets/logo/uang.png', // Ganti dengan icon yang sesuai
+            label: 'Dapatkan Diskon',
             onTap: () {
-              // TODO: Aksi ubah zona waktu
+              // Arahkan ke halaman DiscountScreen
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder:
+                      (context) =>
+                          const DiskonScreen(), // Menuju ke halaman diskon
+                ),
+              );
             },
           ),
 
           const SizedBox(height: 16),
 
-          _buildMenuItem(
-            context,
-            imageAssetPath: 'assets/logo/uang.png',
-            label: 'Konversi Mata Uang',
-            subLabel: 'IDR (Rupiah)',
-            onTap: () {
-              _showCurrencyConversionDialog(context);
-            },
-          ),
-
-          const SizedBox(height: 16),
-
+          // Menyisakan menu Orderanku dan Logout saja
           _buildMenuItem(
             context,
             imageAssetPath: 'assets/logo/logout.png',

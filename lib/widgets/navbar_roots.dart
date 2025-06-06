@@ -1,3 +1,4 @@
+import 'package:finalproject/screens/diskon_screen.dart';
 import 'package:finalproject/screens/medicine_store_screen.dart';
 import 'package:finalproject/screens/profile_screen.dart';
 import 'package:finalproject/theme/theme.dart';
@@ -15,8 +16,9 @@ class _NavbarRootsState extends State<NavbarRoots> {
   int _selectedIndex = 0;
 
   final List<Widget> _screens = [
-    const MedicineStoreScreen(), 
+    const MedicineStoreScreen(),
     const ProfileScreen(),
+    // Halaman lokasi
   ];
 
   void _onItemTapped(int index) {
@@ -29,17 +31,15 @@ class _NavbarRootsState extends State<NavbarRoots> {
     final bool isActive = _selectedIndex == index;
     if (isActive) {
       return Container(
-        padding: const EdgeInsets.all(
-          15,
-        ), // Lebih besar padding supaya lingkaran lebih besar
+        padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
           color: lightColorScheme.primary,
           shape: BoxShape.circle,
         ),
-        child: Icon(icon, color: Colors.white, size: 25), // ikon lebih besar
+        child: Icon(icon, color: Colors.white, size: 25),
       );
     } else {
-      return Icon(icon, color: Colors.grey, size: 25); // ikon lebih besar
+      return Icon(icon, color: Colors.grey, size: 25);
     }
   }
 
@@ -51,7 +51,6 @@ class _NavbarRootsState extends State<NavbarRoots> {
         child: Container(
           decoration: const BoxDecoration(color: Colors.white),
           child: SizedBox(
-            // height: 75, // tinggi navbar diperbesar
             child: BottomNavigationBar(
               backgroundColor: Colors.white,
               type: BottomNavigationBarType.fixed,
