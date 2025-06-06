@@ -269,7 +269,7 @@ class _MedicineStoreScreenState extends State<MedicineStoreScreen> {
 
                                   return GestureDetector(
                                     onTap: () {
-                                      Navigator.push( m 
+                                      Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                           builder: (_) =>

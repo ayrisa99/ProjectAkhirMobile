@@ -113,7 +113,7 @@ class OrderankuList extends StatelessWidget {
                       ],
                     ),
                   );
-                }).toList(),
+                }),
 
                 const Divider(height: 32, thickness: 1),
 
